@@ -2,11 +2,16 @@
 
 <html lang="en" dir="ltr">
   <head>
+  
     <meta charset="UTF-8">
 
     <!-- Page Title -->
     <title>Maykelin Lopez</title>
 
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+<script type="text/javascript">
+  emailjs.init('tPON_aBbYcQkgG64H'); // Reemplaza YOUR_PUBLIC_KEY con tu clave pública real
+</script> 
     <!-- Meta Tags -->
     <meta name="description" content="Show yourself brightly with Braxton - unique and creative portfolio and resume template!">
     <meta name="keywords" content="mix_design, resume, portfolio, personal page, cv, template, one page, responsive, html5, css3, creative, clean">
@@ -46,10 +51,7 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <!-- Custom Browser Color End -->
 
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
-    <script type="text/javascript">
-      emailjs.init('tPON_aBbYcQkgG64H'); // Reemplaza con tu User ID
-    </script>
+   
 
   </head>
 
@@ -426,7 +428,7 @@
                   <div class="about-info__item animate-in-up">
                     <h6>
                       <small class="top">Correo:</small>
-                      <a class="text-link-bold" href="mailto:example@example.com?subject=Message%20from%20your%20site">maykelin32@gmail.com</a>
+                      <a class="text-link-bold" href="mailto:maykelin32@gmail.com">maykelin32@gmail.com</a>
                     </h6>
                   </div>
                   <div class="about-info__item animate-in-up">
@@ -783,7 +785,7 @@
     message: document.getElementById("message").value // Obtén el valor del campo "message"
   };
 
-  emailjs.send('1997', '__ejs-test-mail-service__', params) // Reemplaza con tus IDs
+  emailjs.send('1997', 'template_hlj7pe2', params) // Reemplaza con tus IDs
     .then(function(response) {
       console.log('SUCCESS!', response.status, response.text);
       alert("Mensaje enviado correctamente.");
