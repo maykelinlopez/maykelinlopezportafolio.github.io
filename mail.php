@@ -1,49 +1,42 @@
 <?php
 
-$method = $_SERVER['REQUEST_METHOD'];
-$message = '';
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
-// Inicializamos la variable c para la tabla
-$c = true;
+    $projectName = $_POST['project_name'];
+    $adminEmail = $_POST['admin_email'];
+    $formSubject = $_POST['form_subject'];
 
-if ($method === 'POST' || $method === 'GET') {
-    $project_name = trim($method === 'POST' ? $_POST["project_name"] : $_GET["project_name"]);
-    $admin_email  = trim($method === 'POST' ? $_POST["admin_email"] : $_GET["admin_email"]);
-    $form_subject = trim($method === 'POST' ? $_POST["form_subject"] : $_GET["form_subject"]);
+    $name = $_POST['Name'];
+    $company = $_POST['Company'];
+    $email = $_POST['E-mail'];
+    $phone = $_POST['Phone'];
+    $message = $_POST['Message'];
 
-    foreach ($method === 'POST' ? $_POST : $_GET as $key => $value) {
-        if ($value != "" && $key != "project_name" && $key != "admin_email" && $key != "form_subject") {
-            // Escapar salida para evitar inyección HTML
-            $key = htmlspecialchars($key);
-            $value = htmlspecialchars($value);
-            $message .= "
-            " . (($c = !$c) ? '<tr>':'<tr style="background-color: #f8f8f8;">') . "
-                <td style='padding: 10px; border: #e9e9e9 1px solid;'><b>$key</b></td>
-                <td style='padding: 10px; border: #e9e9e9 1px solid;'>$value</td>
-            </tr>
-            ";
-        }
+
+    $body = "Nombre: " . $name . "\n";
+    if (!empty($company)) {
+        $body .= "Compañía: " . $company . "\n";
     }
-    
-    $message = "<table style='width: 100%;'>$message</table>";
+    $body .= "Email: " . $email . "\n";
+    $body .= "Teléfono: " . $phone . "\n";
+    $body .= "Mensaje: " . $message . "\n";
 
-    // Función adopt
-    function adopt($text) {
-        return '=?UTF-8?B?'.Base64_encode($text).'?=';
-    }
+    // Para enviar un correo HTML, configura los encabezados
+    $headers = "From: " . $email . "\r\n";
+    $headers .= "Reply-To: " . $email . "\r\n";
+    $headers .= "MIME-Version: 1.0\r\n";
+    $headers .= "Content-Type: text/plain; charset=UTF-8\r\n"; // o text/html si usas HTML en el mensaje
 
-    // Encabezados del correo
-    $headers = "MIME-Version: 1.0" . PHP_EOL .
-               "Content-Type: text/html; charset=utf-8" . PHP_EOL .
-               'From: '.adopt($project_name).' <'.$admin_email.'>' . PHP_EOL .
-               'Reply-To: '.$admin_email.'' . PHP_EOL;
+    // Envía el correo
+    $success = mail($adminEmail, $formSubject, $body, $headers);
 
-    // Enviar el correo y manejar errores
-    if (!mail($admin_email, adopt($form_subject), $message, $headers)) {
-        echo "Error al enviar el correo.";
+    if ($success) {
+        // Redirige al usuario a una página de agradecimiento (opcional)
+        header("Location: gracias.html"); // Crea un archivo gracias.html
+        exit();
     } else {
-        echo "Correo enviado con éxito.";
+        // Muestra un mensaje de error
+        echo "Hubo un error al enviar el mensaje. Inténtalo de nuevo más tarde.";
     }
-} else {
-    echo "Método no permitido.";
 }
+?>

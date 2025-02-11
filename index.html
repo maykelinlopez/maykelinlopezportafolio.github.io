@@ -45,6 +45,12 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <!-- Custom Browser Color End -->
+
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+    <script type="text/javascript">
+      emailjs.init('tPON_aBbYcQkgG64H'); // Reemplaza con tu User ID
+    </script>
+
   </head>
 
   <body>
@@ -722,7 +728,7 @@
               <!-- Reply Messages End -->
               
               <!-- Contact Form Start -->
-              <form action="mail.php" method="post">
+              <form id="myForm" onsubmit="enviarCorreo(event)">
                 <!-- Hidden Required Fields -->
                 <input type="hidden" name="project_name" value="Starter Template">
                 <input type="hidden" name="admin_email" value="maykelin32@gmail.com">
@@ -731,23 +737,23 @@
                 <div class="container-fluid p-0">
                   <div class="row gx-0">
                     <div class="col-12 col-md-6 form__item animate-in-up">
-                      <label for="name">Nombre*</label>
-                      <input type="text" id="name" name="Name" placeholder="Nombre*" required>
+                      <label for="name">Nombre</label>
+                      <input type="text" id="name" name="Name" placeholder="Nombre" required>
                     </div>
                     <div class="col-12 col-md-6 form__item animate-in-up">
                       <label for="company">Nombre de Compañía</label>
                       <input type="text" id="company" name="Company" placeholder="Nombre de Compañia">
                     </div>
                     <div class="col-12 col-md-6 form__item animate-in-up">
-                      <label for="email">Correo*</label>
+                      <label for="email">Correo</label>
                       <input type="email" id="email" name="E-mail" placeholder="Correo*" required>
                     </div>
                     <div class="col-12 col-md-6 form__item animate-in-up">
-                      <label for="phone">Número de teléfono*</label>
+                      <label for="phone">Número de teléfono</label>
                       <input type="tel" id="phone" name="Phone" placeholder="Numero de teléfono*" required>
                     </div>
                     <div class="col-12 form__item animate-in-up">
-                      <label for="message">Consulta*</label>
+                      <label for="message">Consulta</label>
                       <textarea id="message" name="Message" placeholder="Consulta*" required></textarea>
                     </div>
                     <div class="col-12 form__item animate-in-up">
@@ -760,10 +766,36 @@
                 </div>
               </form>
               
+
               <!-- Contact Form End -->
 
             </div>
           </div>
+<script>
+  function enviarCorreo(event) {
+  event.preventDefault(); // Evita que se recargue la página
+
+  const params = {
+    name: document.getElementById("name").value, // Obtén el valor del campo "name"
+    company: document.getElementById("company").value, // Obtén el valor del campo "company"
+    email: document.getElementById("email").value, // Obtén el valor del campo "email"
+    phone: document.getElementById("phone").value, // Obtén el valor del campo "phone"
+    message: document.getElementById("message").value // Obtén el valor del campo "message"
+  };
+
+  emailjs.send('1997', '__ejs-test-mail-service__', params) // Reemplaza con tus IDs
+    .then(function(response) {
+      console.log('SUCCESS!', response.status, response.text);
+      alert("Mensaje enviado correctamente.");
+      document.getElementById("myForm").reset(); // Limpia el formulario
+    }, function(error) {
+      console.error('FAILED...', error);
+      alert("Error al enviar el mensaje. Inténtalo de nuevo más tarde.");
+    });
+}
+</script>
+
+
           <!-- Content Block - Contact Form End -->
 
           <!-- Content Block - Socials Cards Start -->
@@ -818,7 +850,7 @@
                 <div class="col-12 col-md-4 contact-lines__data">
                   <p class="contact-lines__title animate-in-up">Correo</p>
                   <p class="contact-lines__text animate-in-up">
-                    <a class="text-link-bold" href="mailto:example@example.com?subject=Message%20from%20your%20site">maykelin32@gmail.com</a>
+                    <a class="text-link-bold" href="mailto:maykelin32@gmail.com">maykelin32@gmail.com</a>
                   </p>
                 </div>
               </div>
