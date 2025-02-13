@@ -433,4 +433,26 @@ window.addEventListener('DOMContentLoaded', () => {
 // --------------------------------------------- //
 
 
+function enviarCorreo(event) {
+  event.preventDefault();
 
+  const btn = document.getElementById('submitButton'); // Obtén el botón usando su ID
+  btn.value = 'Enviando...';
+  btn.disabled = true; // Deshabilita el botón
+
+  const serviceID = 'maykelinlopez'; // Reemplaza con tu ID de servicio
+  const templateID = 'template_d6z21u4'; // Reemplaza con tu ID de plantilla
+
+  emailjs.sendForm(serviceID, templateID, document.getElementById('myForm'))
+    .then(() => {
+      btn.value = 'Enviar mensaje';
+      btn.disabled = false; // Vuelve a habilitar el botón
+      alert('¡Mensaje enviado!');
+      document.getElementById('myForm').reset(); // Limpia el formulario
+    }, (err) => {
+      btn.value = 'Enviar mensaje';
+      btn.disabled = false; // Habilita el botón incluso en caso de error
+      alert('Error al enviar el mensaje. Inténtalo de nuevo más tarde.');
+      console.error("Error de EmailJS:", err); // Registra el error para depurar
+    });
+}
