@@ -785,7 +785,7 @@
     message: document.getElementById("message").value // Obtén el valor del campo "message"
   };
 
-  emailjs.send('maykelinlopez', 'template_qqk9wha', params) // Reemplaza con tus IDs
+  emailjs.send('maykelinlopez', '__ejs-test-mail-service__', params) // Reemplaza con tus IDs
     .then(function(response) {
       console.log('SUCCESS!', response.status, response.text);
       alert("Mensaje enviado correctamente.");
